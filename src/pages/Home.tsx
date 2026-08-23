@@ -26,7 +26,7 @@ interface HomeProps {
 export const Home: React.FC<HomeProps> = ({ onNavigate, onSelectProject }) => {
   const [contributions, setContributions] = useState<ContributionDay[] | null>(null);
   const [commitTotal, setCommitTotal] = useState<number | null>(null);
-  const { getViews, getStars, isStarred, toggleStar, ready: statsReady } = useProjectStats();
+  const { getViews, getStars, isStarred, addStar, ready: statsReady } = useProjectStats();
 
   useEffect(() => {
     let cancelled = false;
@@ -198,7 +198,7 @@ export const Home: React.FC<HomeProps> = ({ onNavigate, onSelectProject }) => {
                     onClick={(e) => {
                       e.stopPropagation();
                       soundManager.playClick('action');
-                      toggleStar(project.id);
+                      addStar(project.id);
                     }}
                     title={isStarred(project.id) ? 'Unlike' : 'Like this project'}
                     aria-label="Like project"

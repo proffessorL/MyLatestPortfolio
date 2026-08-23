@@ -12,7 +12,7 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [selectedStatus, setSelectedStatus] = useState<string>('All');
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const { getViews, getStars, isStarred, toggleStar, ready: statsReady } = useProjectStats();
+  const { getViews, getStars, isStarred, addStar, ready: statsReady } = useProjectStats();
 
   const filteredProjects = useMemo(() => {
     return projectsData.filter((project) => {
@@ -232,9 +232,9 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
                       onClick={(e) => {
                         e.stopPropagation();
                         soundManager.playClick('action');
-                        toggleStar(project.id);
+                        addStar(project.id);
                       }}
-                      title={isStarred(project.id) ? 'Unlike' : 'Like this project'}
+                      title={'Like this project'}
                       aria-label="Like project"
                       className={`flex items-center gap-1 cursor-pointer transition-colors ${
                         isStarred(project.id) ? 'text-secondary' : 'hover:text-secondary'

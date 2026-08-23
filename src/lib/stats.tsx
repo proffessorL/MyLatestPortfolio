@@ -19,7 +19,7 @@ interface StatsContextValue {
   getViews: (projectId: string) => number | null;
   getStars: (projectId: string) => number | null;
   isStarred: (projectId: string) => boolean;
-  toggleStar: (projectId: string) => void;
+  addStar: (projectId: string) => void;
   recordView: (projectId: string) => void;
 }
 
@@ -109,13 +109,9 @@ export const StatsProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     });
   }, []);
 
-  // One view counted per project per page load (in-memory, resets on refresh)
-  const viewedThisLoad = React.useRef<Set<string>>(new Set());
-
+  // Every modal open counts as a view
   const recordView = useCallback(
     (projectId: string) => {
-      if (viewedThisLoad.current.has(projectId)) return;
-      viewedThisLoad.current.add(projectId);
       bumpStat(projectId, 'views', 1);
       if (LIVE_MODE) {
         void supabaseRpc('increment_project_view', { p_project_id: projectId }).then((ok) => {
@@ -137,18 +133,11 @@ export const StatsProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     [bumpStat]
   );
 
-  const toggleStar = useCallback(
+  // Every click adds +1 star (applause-style, no un-like)
+  const addStar = useCallback(
     (projectId: string) => {
-      const wasStarred = Boolean(starred[projectId]);
-      const next = !wasStarred;
-
       setStarred((prev) => {
-        const updated = { ...prev };
-        if (next) {
-          updated[projectId] = true;
-        } else {
-          delete updated[projectId];
-        }
+        const updated = { ...prev, [projectId]: true as const };
         try {
           localStorage.setItem(LOCAL_STARRED_KEY, JSON.stringify(updated));
         } catch {
@@ -157,17 +146,17 @@ export const StatsProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         return updated;
       });
 
-      bumpStat(projectId, 'stars', next ? 1 : -1);
+      bumpStat(projectId, 'stars', 1);
 
       if (LIVE_MODE) {
-        void supabaseRpc('set_project_star', { p_project_id: projectId, p_starred: next }).then((ok) => {
-          if (!ok) bumpStat(projectId, 'stars', next ? -1 : 1);
+        void supabaseRpc('set_project_star', { p_project_id: projectId, p_starred: true }).then((ok) => {
+          if (!ok) bumpStat(projectId, 'stars', -1);
         });
       } else {
         const local = readLocalStats();
         local[projectId] = {
           views: local[projectId]?.views ?? 0,
-          stars: Math.max(0, (local[projectId]?.stars ?? 0) + (next ? 1 : -1)),
+          stars: (local[projectId]?.stars ?? 0) + 1,
         };
         try {
           localStorage.setItem(LOCAL_STATS_KEY, JSON.stringify(local));
@@ -176,7 +165,7 @@ export const StatsProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         }
       }
     },
-    [starred, bumpStat]
+    [bumpStat]
   );
 
   const value = useMemo<StatsContextValue>(
@@ -194,10 +183,10 @@ export const StatsProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         return ready ? stats[projectId]?.stars ?? 0 : null;
       },
       isStarred: (projectId) => Boolean(starred[projectId]),
-      toggleStar,
+      addStar,
       recordView,
     }),
-    [stats, starred, ready, toggleStar, recordView]
+    [stats, starred, ready, addStar, recordView]
   );
 
   return <StatsContext.Provider value={value}>{children}</StatsContext.Provider>;
