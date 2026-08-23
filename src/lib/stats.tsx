@@ -66,9 +66,12 @@ export const StatsProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   // Initial load
   useEffect(() => {
+    // Restore the visitor's own likes on every page load (all modes)
+    setStarred(readLocalStarred());
+
     if (!LIVE_MODE) {
       setStats(readLocalStats());
-      setStarred(readLocalStarred());
+      setReady(true);
       return;
     }
     let cancelled = false;
@@ -106,15 +109,13 @@ export const StatsProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     });
   }, []);
 
+  // One view counted per project per page load (in-memory, resets on refresh)
+  const viewedThisLoad = React.useRef<Set<string>>(new Set());
+
   const recordView = useCallback(
     (projectId: string) => {
-      const sessionKey = `viewed_${projectId}`;
-      try {
-        if (sessionStorage.getItem(sessionKey)) return;
-        sessionStorage.setItem(sessionKey, '1');
-      } catch {
-        /* storage unavailable */
-      }
+      if (viewedThisLoad.current.has(projectId)) return;
+      viewedThisLoad.current.add(projectId);
       bumpStat(projectId, 'views', 1);
       if (LIVE_MODE) {
         void supabaseRpc('increment_project_view', { p_project_id: projectId }).then((ok) => {
