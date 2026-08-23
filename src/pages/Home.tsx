@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { projectsData } from '../data/portfolioData';
 import type { TabId, ProjectItem } from '../types';
 import { soundManager } from '../utils/sound';
+import { useProjectStats } from '../lib/stats';
 import profilePhoto from '../assets/profile.jpg';
 
 const GITHUB_USERNAME = 'proffessorL';
@@ -25,6 +26,7 @@ interface HomeProps {
 export const Home: React.FC<HomeProps> = ({ onNavigate, onSelectProject }) => {
   const [contributions, setContributions] = useState<ContributionDay[] | null>(null);
   const [commitTotal, setCommitTotal] = useState<number | null>(null);
+  const { getViews, getStars, isStarred, toggleStar } = useProjectStats();
 
   useEffect(() => {
     let cancelled = false;
@@ -188,12 +190,29 @@ export const Home: React.FC<HomeProps> = ({ onNavigate, onSelectProject }) => {
 
               <div className="flex items-center justify-between text-on-surface-variant font-mono-code text-xs pt-3 border-t border-outline-variant/40">
                 <div className="flex gap-3">
-                  <span className="flex items-center gap-1 group-hover:text-primary transition-colors text-xs">
-                    <span className="material-symbols-outlined text-[14px]">visibility</span> {project.views}
+                  <span className="flex items-center gap-1 group-hover:text-primary transition-colors text-xs" title={`${project.views} views`}>
+                    <span className="material-symbols-outlined text-[14px]">visibility</span> {getViews(project.id, project.views)}
                   </span>
-                  <span className="flex items-center gap-1 group-hover:text-secondary transition-colors text-xs">
-                    <span className="material-symbols-outlined text-[14px]">star</span> {project.stars}
-                  </span>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      soundManager.playClick('action');
+                      toggleStar(project.id);
+                    }}
+                    title={isStarred(project.id) ? 'Unlike' : 'Like this project'}
+                    aria-label="Like project"
+                    className={`flex items-center gap-1 cursor-pointer transition-colors ${
+                      isStarred(project.id) ? 'text-secondary' : 'group-hover:text-secondary'
+                    }`}
+                  >
+                    <span
+                      className="material-symbols-outlined text-[14px]"
+                      style={isStarred(project.id) ? { fontVariationSettings: "'FILL' 1" } : undefined}
+                    >
+                      star
+                    </span>
+                    <span className="text-xs">{getStars(project.id, project.stars ?? 0)}</span>
+                  </button>
                 </div>
                 <span className="material-symbols-outlined text-[16px] text-primary group-hover:scale-110 transition-transform" title="View Spec">
                   info

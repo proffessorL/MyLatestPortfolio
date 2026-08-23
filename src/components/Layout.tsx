@@ -9,6 +9,7 @@ import { Resume } from '../pages/Resume';
 import { Contact } from '../pages/Contact';
 import { ProjectModal } from './ProjectModal';
 import { soundManager } from '../utils/sound';
+import { StatsProvider } from '../lib/stats';
 
 const TABS: TabInfo[] = [
   { id: 'home', label: 'Home', filename: 'dashboard.tsx', icon: 'home', sectionNumber: 'Home' },
@@ -96,7 +97,8 @@ export const Layout: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col h-dvh w-screen overflow-hidden bg-background text-on-surface select-none">
+    <StatsProvider>
+      <div className="flex flex-col h-dvh w-screen overflow-hidden bg-background text-on-surface select-none">
       {/* Sleek Header Navigation */}
       <header className="h-panel-header px-4 md:px-6 bg-background border-b border-outline-variant/60 flex items-center justify-between z-50 shrink-0 shadow-xs">
         {/* Brand Logo & Mobile Toggle */}
@@ -438,6 +440,7 @@ export const Layout: React.FC = () => {
           </div>
         </div>
       </footer>
-    </div>
+      </div>
+    </StatsProvider>
   );
 };

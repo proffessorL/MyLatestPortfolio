@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import type { ProjectItem } from '../types';
 import { soundManager } from '../utils/sound';
+import { useProjectStats } from '../lib/stats';
 
 interface ProjectModalProps {
   project: ProjectItem | null;
@@ -10,10 +11,15 @@ interface ProjectModalProps {
 export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
   const [activeTab, setActiveTab] = useState<'architecture' | 'output' | 'overview'>('overview');
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
+  const { recordView } = useProjectStats();
 
   useEffect(() => {
     setSelectedImage(null);
   }, [project?.id]);
+
+  useEffect(() => {
+    if (project) recordView(project.id);
+  }, [project?.id, recordView]);
 
   const totalOutputImages = project?.outputImages?.length ?? 0;
 
@@ -36,14 +42,14 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-md animate-fadeIn">
-      <div className="bg-surface-container-low border border-outline-variant rounded-lg max-w-3xl w-full max-h-[90vh] overflow-hidden flex flex-col shadow-2xl">
+    <div className="fixed inset-0 z-[70] flex items-center justify-center p-3 sm:p-4 bg-background/80 backdrop-blur-md animate-fadeIn">
+      <div className="bg-surface-container-low border border-outline-variant rounded-lg max-w-3xl w-full max-h-[92vh] sm:max-h-[90vh] overflow-hidden flex flex-col shadow-2xl">
         {/* Modal Header */}
-        <div className="p-4 border-b border-outline-variant/60 bg-surface-container flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <span className="material-symbols-outlined text-primary text-xl">terminal</span>
-            <div>
-              <h2 className="font-mono-code font-bold text-base text-on-surface flex items-center gap-2">
+        <div className="p-3 sm:p-4 border-b border-outline-variant/60 bg-surface-container flex items-start sm:items-center justify-between gap-2">
+          <div className="flex items-center gap-3 min-w-0">
+            <span className="material-symbols-outlined text-primary text-xl shrink-0">terminal</span>
+            <div className="min-w-0">
+              <h2 className="font-mono-code font-bold text-base text-on-surface flex flex-wrap items-center gap-x-2 gap-y-1">
                 {project.title}
                 {project.categories.map((cat) => (
                   <span key={cat} className="text-[10px] font-mono-code px-2 py-0.5 rounded bg-primary/10 border border-primary/30 text-primary">
@@ -51,7 +57,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
                   </span>
                 ))}
               </h2>
-              <span className="font-mono-code text-[11px] text-outline">projects/{project.id}.spec.ts</span>
+              <span className="font-mono-code text-[11px] text-outline truncate block">projects/{project.id}.spec.ts</span>
             </div>
           </div>
 
@@ -60,7 +66,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
               soundManager.playClick('action');
               onClose();
             }}
-            className="p-1.5 rounded text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-colors cursor-pointer"
+            className="p-2 -m-1 rounded text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-colors cursor-pointer shrink-0"
             aria-label="Close modal"
           >
             <span className="material-symbols-outlined">close</span>
@@ -68,10 +74,10 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
         </div>
 
         {/* Modal Sub-Tabs */}
-        <div className="flex border-b border-outline-variant/60 bg-surface-container-lowest px-4 gap-2 text-xs font-mono-code overflow-x-auto">
+        <div className="flex flex-wrap sm:flex-nowrap border-b border-outline-variant/60 bg-surface-container-lowest px-3 sm:px-4 gap-x-1 gap-y-0.5 text-xs font-mono-code">
           <button
             onClick={() => handleTabChange('overview')}
-            className={`shrink-0 whitespace-nowrap px-3 py-2 cursor-pointer transition-colors border-b-2 ${
+            className={`shrink-0 whitespace-nowrap px-3 py-2.5 sm:py-2 cursor-pointer transition-colors border-b-2 ${
               activeTab === 'overview'
                 ? 'border-primary text-primary font-bold'
                 : 'border-transparent text-on-surface-variant hover:text-on-surface'
@@ -82,7 +88,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
           {(project.architectureNodes || project.architectureLoop || project.architectureDiagram) && (
             <button
               onClick={() => handleTabChange('architecture')}
-              className={`shrink-0 whitespace-nowrap px-3 py-2 cursor-pointer transition-colors border-b-2 ${
+              className={`shrink-0 whitespace-nowrap px-3 py-2.5 sm:py-2 cursor-pointer transition-colors border-b-2 ${
                 activeTab === 'architecture'
                   ? 'border-primary text-primary font-bold'
                   : 'border-transparent text-on-surface-variant hover:text-on-surface'
@@ -94,7 +100,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
           {project.outputImages && project.outputImages.length > 0 && (
             <button
               onClick={() => handleTabChange('output')}
-              className={`shrink-0 whitespace-nowrap px-3 py-2 cursor-pointer transition-colors border-b-2 ${
+              className={`shrink-0 whitespace-nowrap px-3 py-2.5 sm:py-2 cursor-pointer transition-colors border-b-2 ${
                 activeTab === 'output'
                   ? 'border-primary text-primary font-bold'
                   : 'border-transparent text-on-surface-variant hover:text-on-surface'
@@ -106,7 +112,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
         </div>
 
         {/* Modal Body */}
-        <div className="p-6 overflow-y-auto space-y-6 flex-1">
+        <div className="p-4 sm:p-6 overflow-y-auto space-y-6 flex-1 min-h-0">
           {activeTab === 'overview' && (
             <div className="space-y-6">
               {/* Project Image Header */}
@@ -360,7 +366,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
               {/* Lightbox */}
               {selectedImage !== null && (
                 <div
-                  className="fixed inset-0 z-[60] bg-background/90 backdrop-blur-md flex items-center justify-center p-4 md:p-8 animate-fadeIn cursor-zoom-out"
+                  className="fixed inset-0 z-[80] bg-background/90 backdrop-blur-md flex items-center justify-center p-4 md:p-8 animate-fadeIn cursor-zoom-out"
                   onClick={() => setSelectedImage(null)}
                 >
                   <button
