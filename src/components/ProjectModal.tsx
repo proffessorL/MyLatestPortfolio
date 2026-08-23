@@ -68,10 +68,10 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
         </div>
 
         {/* Modal Sub-Tabs */}
-        <div className="flex border-b border-outline-variant/60 bg-surface-container-lowest px-4 gap-2 text-xs font-mono-code">
+        <div className="flex border-b border-outline-variant/60 bg-surface-container-lowest px-4 gap-2 text-xs font-mono-code overflow-x-auto">
           <button
             onClick={() => handleTabChange('overview')}
-            className={`px-3 py-2 cursor-pointer transition-colors border-b-2 ${
+            className={`shrink-0 whitespace-nowrap px-3 py-2 cursor-pointer transition-colors border-b-2 ${
               activeTab === 'overview'
                 ? 'border-primary text-primary font-bold'
                 : 'border-transparent text-on-surface-variant hover:text-on-surface'
@@ -82,7 +82,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
           {(project.architectureNodes || project.architectureLoop || project.architectureDiagram) && (
             <button
               onClick={() => handleTabChange('architecture')}
-              className={`px-3 py-2 cursor-pointer transition-colors border-b-2 ${
+              className={`shrink-0 whitespace-nowrap px-3 py-2 cursor-pointer transition-colors border-b-2 ${
                 activeTab === 'architecture'
                   ? 'border-primary text-primary font-bold'
                   : 'border-transparent text-on-surface-variant hover:text-on-surface'
@@ -94,7 +94,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
           {project.outputImages && project.outputImages.length > 0 && (
             <button
               onClick={() => handleTabChange('output')}
-              className={`px-3 py-2 cursor-pointer transition-colors border-b-2 ${
+              className={`shrink-0 whitespace-nowrap px-3 py-2 cursor-pointer transition-colors border-b-2 ${
                 activeTab === 'output'
                   ? 'border-primary text-primary font-bold'
                   : 'border-transparent text-on-surface-variant hover:text-on-surface'

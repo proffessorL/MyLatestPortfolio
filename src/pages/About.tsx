@@ -23,7 +23,7 @@ export const About: React.FC<AboutProps> = ({ onNavigate }) => {
   return (
     <div className="p-4 md:p-6 lg:p-8 max-w-4xl mx-auto space-y-8 animate-fadeIn">
       {/* Header */}
-      <div className="border-b border-outline-variant pb-4 flex justify-between items-end">
+      <div className="border-b border-outline-variant pb-4 flex flex-wrap justify-between items-end gap-3">
         <div>
           <h1 className="font-headline-xl text-headline-xl text-on-surface font-bold font-mono-code mb-1">
             about_me.ts

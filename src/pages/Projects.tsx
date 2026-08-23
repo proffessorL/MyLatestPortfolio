@@ -28,7 +28,7 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
   return (
     <div className="flex flex-col lg:flex-row h-full min-h-[calc(100vh-panel-header-panel-footer)] animate-fadeIn">
       {/* Filter Explorer Column (IDE Sidebar) */}
-      <aside className="w-full lg:w-64 border-b lg:border-b-0 lg:border-r border-outline-variant/60 bg-surface-container-lowest p-4 space-y-6 shrink-0">
+      <aside className="w-full lg:w-64 border-b lg:border-b-0 lg:border-r border-outline-variant/60 bg-surface-container-lowest p-4 space-y-4 lg:space-y-6 shrink-0">
         <div className="flex items-center justify-between font-mono-code text-xs text-primary font-bold">
           <span className="flex items-center gap-1.5">
             <span className="material-symbols-outlined text-sm">folder_open</span>
@@ -49,7 +49,7 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
               soundManager.playClick('key');
               setSearchQuery(e.target.value);
             }}
-            className="w-full bg-background border border-outline-variant/60 rounded px-3 py-1.5 text-xs font-mono-code text-on-surface placeholder:text-outline focus:outline-none focus:border-primary"
+            className="w-full bg-background border border-outline-variant/60 rounded px-3 py-2 sm:py-1.5 text-base sm:text-xs font-mono-code text-on-surface placeholder:text-outline focus:outline-none focus:border-primary"
           />
           {searchQuery && (
             <button
@@ -71,7 +71,7 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
             <span className="uppercase font-bold tracking-wider">Technologies</span>
           </div>
 
-          <div className="ml-3 space-y-1.5">
+          <div className="flex flex-wrap gap-1.5 lg:flex-col lg:gap-1.5 lg:ml-3">
             {['All', 'AI / ML', 'Web Development', 'Dev Tools'].map((cat) => (
               <label
                 key={cat}
@@ -79,8 +79,10 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
                   soundManager.playClick('tab');
                   setSelectedCategory(cat);
                 }}
-                className={`flex items-center gap-2 cursor-pointer p-1 rounded text-xs transition-colors ${
-                  selectedCategory === cat ? 'bg-surface-container text-primary font-bold' : 'text-on-surface-variant hover:text-on-surface'
+                className={`inline-flex items-center gap-1.5 lg:gap-2 cursor-pointer px-2.5 py-1.5 lg:px-1 lg:py-1 rounded-md text-xs transition-colors border ${
+                  selectedCategory === cat
+                    ? 'bg-surface-container text-primary font-bold border-primary/40'
+                    : 'text-on-surface-variant hover:text-on-surface border-transparent hover:border-outline-variant/40'
                 }`}
               >
                 <input
@@ -103,7 +105,7 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
             <span className="uppercase font-bold tracking-wider">Status</span>
           </div>
 
-          <div className="ml-3 space-y-1.5">
+          <div className="flex flex-wrap gap-1.5 lg:flex-col lg:gap-1.5 lg:ml-3">
             {[
               { label: 'All', color: '' },
               { label: 'Completed', color: 'bg-secondary' },
@@ -115,8 +117,10 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
                   soundManager.playClick('tab');
                   setSelectedStatus(stat.label);
                 }}
-                className={`flex items-center gap-2 cursor-pointer p-1 rounded text-xs transition-colors ${
-                  selectedStatus === stat.label ? 'bg-surface-container text-primary font-bold' : 'text-on-surface-variant hover:text-on-surface'
+                className={`inline-flex items-center gap-1.5 lg:gap-2 cursor-pointer px-2.5 py-1.5 lg:px-1 lg:py-1 rounded-md text-xs transition-colors border ${
+                  selectedStatus === stat.label
+                    ? 'bg-surface-container text-primary font-bold border-primary/40'
+                    : 'text-on-surface-variant hover:text-on-surface border-transparent hover:border-outline-variant/40'
                 }`}
               >
                 <input
@@ -166,7 +170,7 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
             </button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {filteredProjects.map((project) => (
               <article
                 key={project.id}

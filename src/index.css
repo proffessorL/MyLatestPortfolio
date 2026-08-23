@@ -101,6 +101,20 @@ body {
   border-radius: 2px;
   transition: transform 0.15s ease, filter 0.15s ease;
 }
+.heatmap-pad {
+  width: 11px;
+  height: 11px;
+}
+@media (max-width: 640px) {
+  .heatmap-cell,
+  .heatmap-pad {
+    width: 8px;
+    height: 8px;
+  }
+  .heatmap-grid {
+    gap: 2px;
+  }
+}
 .heatmap-cell:hover {
   transform: scale(1.2);
   filter: brightness(1.2);

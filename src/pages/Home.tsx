@@ -206,7 +206,7 @@ export const Home: React.FC<HomeProps> = ({ onNavigate, onSelectProject }) => {
 
       {/* GitHub Contributions Section */}
       <section className="bg-surface-container-low border border-outline-variant/60 rounded p-6 overflow-hidden shadow-xs">
-        <div className="flex justify-between items-center mb-4">
+        <div className="flex flex-wrap justify-between items-center gap-2 mb-4">
           <h2 className="font-mono-code text-primary font-bold flex items-center gap-2 text-sm">
             <span className="material-symbols-outlined text-lg">grid_on</span>
             CONTRIBUTIONS
@@ -220,10 +220,13 @@ export const Home: React.FC<HomeProps> = ({ onNavigate, onSelectProject }) => {
           >
             @{GITHUB_USERNAME} · {commitSummary}
           </a>
+          <span className="sm:hidden basis-full text-[10px] text-outline font-mono-code">
+            {'//'} swipe the graph sideways to see all months
+          </span>
         </div>
 
-        <div className="overflow-x-auto pb-2">
-          <div className="min-w-[760px]">
+        <div className="overflow-x-auto pb-2 -mx-1 px-1 touch-pan-x">
+          <div className="min-w-[600px] sm:min-w-[760px]">
             <div className="flex text-on-surface-variant font-mono-code mb-2 ml-7 text-[11px]">
               <span className="flex-1">Jan</span>
               <span className="flex-1">Feb</span>
@@ -249,7 +252,7 @@ export const Home: React.FC<HomeProps> = ({ onNavigate, onSelectProject }) => {
               <div className="heatmap-grid flex-1">
                 {heatmapCells.map((cell, i) =>
                   cell.level < 0 ? (
-                    <div key={`pad-${i}`} className="w-[11px] h-[11px]" />
+                    <div key={`pad-${i}`} className="heatmap-pad" />
                   ) : (
                     <div
                       key={i}

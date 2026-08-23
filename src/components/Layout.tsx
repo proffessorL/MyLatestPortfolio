@@ -96,7 +96,7 @@ export const Layout: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen w-screen overflow-hidden bg-background text-on-surface select-none">
+    <div className="flex flex-col h-dvh w-screen overflow-hidden bg-background text-on-surface select-none">
       {/* Sleek Header Navigation */}
       <header className="h-panel-header px-4 md:px-6 bg-background border-b border-outline-variant/60 flex items-center justify-between z-50 shrink-0 shadow-xs">
         {/* Brand Logo & Mobile Toggle */}
@@ -257,6 +257,15 @@ export const Layout: React.FC = () => {
 
       {/* Workspace Body */}
       <div className="flex flex-1 overflow-hidden relative">
+        {/* Mobile Drawer Scrim */}
+        {isMobileMenuOpen && (
+          <div
+            className="fixed inset-0 bg-background/70 backdrop-blur-sm z-30 md:hidden"
+            onClick={() => setIsMobileMenuOpen(false)}
+            aria-hidden="true"
+          />
+        )}
+
         {/* Sidebar (Desktop + Mobile Drawer) */}
         <aside
           className={`fixed md:static inset-y-0 left-0 top-panel-header bottom-panel-footer w-panel-sidebar bg-surface border-r border-outline-variant/60 z-40 flex flex-col transition-transform duration-200 ${
@@ -404,14 +413,14 @@ export const Layout: React.FC = () => {
       <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />
 
       {/* Bottom Status Footer */}
-      <footer className="h-panel-footer bg-surface-container-low border-t border-outline-variant/60 flex justify-between items-center px-4 text-xs font-mono-code text-secondary shrink-0 z-50">
-        <div className="flex items-center gap-4">
-          <div className="flex items-center gap-1 text-secondary cursor-default">
+      <footer className="h-panel-footer bg-surface-container-low border-t border-outline-variant/60 flex justify-between items-center px-3 md:px-4 text-xs font-mono-code text-secondary shrink-0 z-50 overflow-hidden">
+        <div className="flex items-center gap-4 min-w-0">
+          <div className="flex items-center gap-1 text-secondary cursor-default shrink-0">
             <span className="material-symbols-outlined text-[14px]">call_split</span>
             <span>main</span>
           </div>
 
-          <div className="flex items-center gap-3 text-on-surface-variant text-[11px]">
+          <div className="hidden md:flex items-center gap-3 text-on-surface-variant text-[11px]">
             <span className="flex items-center gap-1">
               <span className="material-symbols-outlined text-[14px] text-secondary">check_circle</span> 0 errors
             </span>
@@ -421,7 +430,7 @@ export const Layout: React.FC = () => {
           </div>
         </div>
 
-        <div className="flex items-center gap-4 text-on-surface-variant text-[11px]">
+        <div className="hidden sm:flex items-center gap-4 text-on-surface-variant text-[11px]">
           <span className="hover:text-on-surface transition-colors">Powered by Node.js & React</span>
           <div className="flex items-center gap-1">
             <span className="material-symbols-outlined text-[14px]">check</span>

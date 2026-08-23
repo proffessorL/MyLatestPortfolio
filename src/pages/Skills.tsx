@@ -31,7 +31,7 @@ export const Skills: React.FC = () => {
   return (
     <div className="p-4 md:p-6 lg:p-8 max-w-7xl mx-auto space-y-8 animate-fadeIn">
       {/* Header */}
-      <div className="border-b border-outline-variant pb-4 flex justify-between items-end">
+      <div className="border-b border-outline-variant pb-4 flex flex-wrap justify-between items-end gap-3">
         <div>
           <h1 className="font-headline-xl text-headline-xl text-on-surface font-mono-code font-bold mb-1">
             system.config.skills
@@ -102,9 +102,9 @@ export const Skills: React.FC = () => {
                   return (
                     <div
                       key={skill.name}
-                      className="group flex items-center justify-between gap-4 px-2 py-2 rounded-md hover:bg-surface-container transition-colors"
+                      className="group flex items-center justify-between gap-2 sm:gap-4 px-1.5 sm:px-2 py-2 rounded-md hover:bg-surface-container transition-colors"
                     >
-                      <div className="flex items-center gap-2.5 min-w-0 w-40 sm:w-48 shrink-0">
+                      <div className="flex items-center gap-2 min-w-0 w-24 sm:w-48 shrink-0">
                         <span className="material-symbols-outlined text-outline group-hover:text-primary transition-colors text-[18px]">
                           {skill.icon}
                         </span>
@@ -116,12 +116,12 @@ export const Skills: React.FC = () => {
                         </span>
                       </div>
 
-                      <div className="flex items-center gap-3 flex-1 justify-end min-w-0">
-                        <div className="flex gap-[3px] shrink-0" aria-hidden="true">
+                      <div className="flex items-center gap-2 sm:gap-3 flex-1 justify-end min-w-0">
+                        <div className="flex gap-[2px] sm:gap-[3px] shrink-0" aria-hidden="true">
                           {Array.from({ length: TOTAL_BLOCKS }).map((_, block) => (
                             <span
                               key={block}
-                              className={`w-[6px] sm:w-2 h-3.5 sm:h-4 rounded-[2px] transition-all duration-300 ${
+                              className={`w-[4px] sm:w-2 h-3 sm:h-4 rounded-[2px] transition-all duration-300 ${
                                 block < filledBlocks && mounted
                                   ? accent.bar
                                   : 'bg-surface-container-highest'
@@ -131,11 +131,11 @@ export const Skills: React.FC = () => {
                           ))}
                         </div>
 
-                        <div className="w-16 sm:w-20 text-right shrink-0">
+                        <div className="w-11 sm:w-20 text-right shrink-0">
                           <div className="font-mono-code text-xs font-bold text-on-surface leading-tight">
                             {skill.percentage}%
                           </div>
-                          <div className="font-mono-code text-[9px] text-outline leading-tight">
+                          <div className="hidden sm:block font-mono-code text-[9px] text-outline leading-tight">
                             {levelLabel(skill.percentage)}
                           </div>
                         </div>
