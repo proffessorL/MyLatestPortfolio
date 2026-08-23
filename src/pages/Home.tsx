@@ -26,7 +26,7 @@ interface HomeProps {
 export const Home: React.FC<HomeProps> = ({ onNavigate, onSelectProject }) => {
   const [contributions, setContributions] = useState<ContributionDay[] | null>(null);
   const [commitTotal, setCommitTotal] = useState<number | null>(null);
-  const { getViews, getStars, isStarred, toggleStar } = useProjectStats();
+  const { getViews, getStars, isStarred, toggleStar, ready: statsReady } = useProjectStats();
 
   useEffect(() => {
     let cancelled = false;
@@ -191,7 +191,8 @@ export const Home: React.FC<HomeProps> = ({ onNavigate, onSelectProject }) => {
               <div className="flex items-center justify-between text-on-surface-variant font-mono-code text-xs pt-3 border-t border-outline-variant/40">
                 <div className="flex gap-3">
                   <span className="flex items-center gap-1 group-hover:text-primary transition-colors text-xs" title={`${project.views} views`}>
-                    <span className="material-symbols-outlined text-[14px]">visibility</span> {getViews(project.id, project.views)}
+                    <span className="material-symbols-outlined text-[14px]">visibility</span>
+                    {statsReady ? getViews(project.id) : <span className="inline-block w-4 animate-pulse">·</span>}
                   </span>
                   <button
                     onClick={(e) => {
@@ -211,7 +212,7 @@ export const Home: React.FC<HomeProps> = ({ onNavigate, onSelectProject }) => {
                     >
                       star
                     </span>
-                    <span className="text-xs">{getStars(project.id, project.stars ?? 0)}</span>
+                    <span className="text-xs">{statsReady ? getStars(project.id) : '·'}</span>
                   </button>
                 </div>
                 <span className="material-symbols-outlined text-[16px] text-primary group-hover:scale-110 transition-transform" title="View Spec">

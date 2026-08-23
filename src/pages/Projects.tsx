@@ -12,7 +12,7 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [selectedStatus, setSelectedStatus] = useState<string>('All');
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const { getViews, getStars, isStarred, toggleStar } = useProjectStats();
+  const { getViews, getStars, isStarred, toggleStar, ready: statsReady } = useProjectStats();
 
   const filteredProjects = useMemo(() => {
     return projectsData.filter((project) => {
@@ -225,7 +225,8 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
                       className="flex items-center gap-1 group-hover:text-primary transition-colors"
                       title={`${project.views} views`}
                     >
-                      <span className="material-symbols-outlined text-[14px]">visibility</span> {getViews(project.id, project.views)}
+                      <span className="material-symbols-outlined text-[14px]">visibility</span>
+                      {statsReady ? getViews(project.id) : <span className="inline-block w-4 animate-pulse">·</span>}
                     </span>
                     <button
                       onClick={(e) => {
@@ -245,7 +246,7 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
                       >
                         star
                       </span>
-                      <span>{getStars(project.id, project.stars ?? 0)}</span>
+                      <span>{statsReady ? getStars(project.id) : '·'}</span>
                     </button>
                   </div>
                 </div>

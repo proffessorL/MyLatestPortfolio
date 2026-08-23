@@ -14,8 +14,10 @@ interface ProjectStat {
 
 interface StatsContextValue {
   liveMode: boolean;
-  getViews: (projectId: string, fallback: number) => number;
-  getStars: (projectId: string, fallback: number) => number;
+  ready: boolean;
+  /** Returns live count, or null while live data is still loading */
+  getViews: (projectId: string) => number | null;
+  getStars: (projectId: string) => number | null;
   isStarred: (projectId: string) => boolean;
   toggleStar: (projectId: string) => void;
   recordView: (projectId: string) => void;
@@ -60,6 +62,7 @@ async function supabaseRpc(fnName: string, args: Record<string, unknown>): Promi
 export const StatsProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [stats, setStats] = useState<Record<string, ProjectStat>>({});
   const [starred, setStarred] = useState<Record<string, true>>({});
+  const [ready, setReady] = useState(!LIVE_MODE);
 
   // Initial load
   useEffect(() => {
@@ -83,8 +86,11 @@ export const StatsProvider: React.FC<{ children: React.ReactNode }> = ({ childre
           map[row.project_id] = { views: row.view_count, stars: row.star_count };
         });
         setStats(map);
+        setReady(true);
       })
-      .catch(() => {});
+      .catch(() => {
+        if (!cancelled) setReady(true);
+      });
     return () => {
       cancelled = true;
     };
@@ -175,13 +181,22 @@ export const StatsProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const value = useMemo<StatsContextValue>(
     () => ({
       liveMode: LIVE_MODE,
-      getViews: (projectId, fallback) => stats[projectId]?.views ?? fallback,
-      getStars: (projectId, fallback) => stats[projectId]?.stars ?? fallback,
+      ready,
+      // Live mode: real counts once loaded, null while pending.
+      // Offline mode: always show the static portfolio numbers.
+      getViews: (projectId) => {
+        if (!LIVE_MODE) return stats[projectId]?.views ?? null;
+        return ready ? stats[projectId]?.views ?? 0 : null;
+      },
+      getStars: (projectId) => {
+        if (!LIVE_MODE) return stats[projectId]?.stars ?? null;
+        return ready ? stats[projectId]?.stars ?? 0 : null;
+      },
       isStarred: (projectId) => Boolean(starred[projectId]),
       toggleStar,
       recordView,
     }),
-    [stats, starred, toggleStar, recordView]
+    [stats, starred, ready, toggleStar, recordView]
   );
 
   return <StatsContext.Provider value={value}>{children}</StatsContext.Provider>;
