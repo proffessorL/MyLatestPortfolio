@@ -1,8 +1,10 @@
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL as string | undefined;
-const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined;
-const LIVE_MODE = Boolean(SUPABASE_URL && SUPABASE_ANON_KEY);
+// Accepts both the bare project URL and the "Data API" URL (with /rest/v1/)
+const RAW_URL = ((import.meta.env.VITE_SUPABASE_URL as string | undefined) ?? '').trim();
+const SUPABASE_URL = RAW_URL.replace(/\/+$/, '').replace(/\/rest\/v1$/, '');
+const SUPABASE_ANON_KEY = (import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined)?.trim();
+const LIVE_MODE = Boolean(RAW_URL && SUPABASE_URL && SUPABASE_ANON_KEY);
 
 const LOCAL_STATS_KEY = 'eusha_stats_local';
 const LOCAL_STARRED_KEY = 'eusha_starred_projects';
