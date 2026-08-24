@@ -1,6 +1,16 @@
 import type { ProjectItem, ExperienceItem, SkillCategory } from '../types';
 import resnorImage from '../assets/resnor.png';
 import adaptiveOverviewImage from '../assets/adaptive-overview.png';
+import analyticalOverviewImage from '../assets/Screenshot 2026-08-24 201327.png';
+import analyticalShot01 from '../assets/Screenshot 2026-08-24 201340.png';
+import analyticalShot02 from '../assets/Screenshot 2026-08-24 201352.png';
+import behavioralOverviewImage from '../assets/behavioral/overview.png';
+import behavioralShot01 from '../assets/behavioral/shot-01.png';
+import behavioralShot02 from '../assets/behavioral/shot-02.png';
+import knnShot01 from '../assets/knn/Screenshot 2026-08-24 203553.png';
+import knnShot02 from '../assets/knn/Screenshot 2026-08-24 205106.png';
+import knnShot03 from '../assets/knn/Screenshot 2026-08-24 205139.png';
+import knnShot04 from '../assets/knn/Screenshot 2026-08-24 205206.png';
 import adaptiveShot01 from '../assets/adaptive-shot-01.png';
 import adaptiveShot02 from '../assets/adaptive-shot-02.png';
 import adaptiveShot03 from '../assets/adaptive-shot-03.png';
@@ -22,6 +32,350 @@ import resnorShot10 from '../assets/resnor-shot-10.png';
 import resnorShot11 from '../assets/resnor-shot-11.png';
 
 export const projectsData: ProjectItem[] = [
+  {
+    id: 'knn-wellbeing-support',
+    title: 'K.N.N Based Welbeing Support',
+    description: 'An AI-assisted wellbeing monitoring system that combines mood tracking, behavioral telemetry, and K-Nearest Neighbors (KNN) to detect personalized stress and burnout patterns.',
+    fullDescription: 'An AI-assisted wellbeing monitoring system that combines mood tracking, behavioral telemetry, and K-Nearest Neighbors (KNN) to detect personalized stress and burnout patterns. Features mood and journal tracking, behavioral fingerprinting, personalized KNN prediction, dynamic risk detection without rigid thresholds, and proactive support integrations.',
+    views: 980,
+    stars: 295,
+    forks: 58,
+    categories: ['Data & Behavioral Engine', 'AI / ML'],
+    status: 'Completed',
+    tags: ['#KNN', '#WellbeingMonitoring', '#BehavioralTelemetry', '#StressDetection', '#Next.js', '#TypeScript'],
+    imageUrl: knnShot01,
+    githubUrl: 'https://github.com/eusha/knn-wellbeing-support',
+    demoUrl: 'https://proffessorl-rafidai.vercel.app/',
+    overview: {
+      headline: 'K.N.N Based Wellbeing Support — Personalized Stress & Burnout Detection',
+      intro: [
+        'An AI-assisted wellbeing monitoring system that combines mood tracking, behavioral telemetry, and K-Nearest Neighbors (KNN) to detect personalized stress and burnout patterns.',
+        'Avoids rigid universal thresholds and adapts predictions to the student\'s individual behavioral baseline.'
+      ],
+      differentiatorsTitle: 'Core Platform Features & Capabilities',
+      differentiators: [
+        {
+          title: '📝 Mood & Journal Tracking',
+          description: 'Captures daily mood, emotional patterns, and journal entries to build longitudinal wellbeing trends.',
+        },
+        {
+          title: '🔍 Behavioral Fingerprinting',
+          description: 'Builds a daily profile from study hours, mood, low-mood frequency, late-night activity, and quiz performance trends.',
+        },
+        {
+          title: '🤖 Personalized KNN Prediction',
+          description: 'Compares the student\'s current behavioral fingerprint against their own historical patterns to identify similarities with previously recorded high-stress or burnout states.',
+        },
+        {
+          title: '⚡ Dynamic Risk Detection',
+          description: 'Avoids rigid universal thresholds and adapts predictions to the student\'s individual behavioral baseline.',
+        },
+        {
+          title: '🛡️ Proactive Support',
+          description: 'Combines risk insights with focus sessions, wellbeing dashboards, and quick-access support mechanisms.',
+        },
+      ],
+      reliabilityTitle: 'Core End-to-End Architecture Flow',
+      reliability: [
+        'Today\'s Behavior + Mood + Journal',
+        'Behavioral Fingerprint Extraction (Hours, Mood, LowMood, Late, QuizTrend)',
+        'Historical Check-in Comparison via KNN Algorithm',
+        'Personalized Risk Prediction (Low / Moderate / High Stress)',
+        'Proactive Support & Intervention Trigger',
+      ],
+      oneLiner: 'Combining mood tracking, behavioral telemetry, and K-Nearest Neighbors (KNN) to detect personalized stress and burnout patterns.',
+    },
+    architectureLoop: ['Today\'s Behavior', 'Behavioral Fingerprint', 'KNN Algorithm', 'Historical Check-ins', 'Risk Prediction', 'Proactive Support'],
+    architectureDiagram: `TODAY'S BEHAVIOR
+             │
+             ▼
+   ┌───────────────────┐
+   │ BEHAVIORAL        │
+   │ FINGERPRINT       │
+   │                   │
+   │ [Hours, Mood,     │
+   │  LowMood, Late,   │
+   │  QuizTrend]       │
+   └─────────┬─────────┘
+             │
+             ▼
+        ┌─────────┐
+        │   KNN   │◄──────── Historical Check-ins
+        └────┬────┘
+             │
+             ▼
+   ┌───────────────────┐
+   │ PERSONALIZED      │
+   │ RISK PREDICTION   │
+   │                   │
+   │ Low / Moderate /  │
+   │ High Stress       │
+   └─────────┬─────────┘
+             │
+             ▼
+      PROACTIVE SUPPORT`,
+    outputImages: [
+      { src: knnShot01 },
+      { src: knnShot02 },
+      { src: knnShot03 },
+      { src: knnShot04 },
+    ],
+  },
+  {
+    id: 'diagnostic-analysis-mistake',
+    title: 'Diagnostic Analysis',
+    description: 'An AI-powered mistake analysis engine that transforms incorrect quiz answers into personalized learning interventions by identifying the root cause of a student\'s misconception.',
+    fullDescription: 'Diagnostic Analysis (Explain My Mistake — AI Diagnostic Learning System) is an advanced AI-powered mistake analysis engine that transforms incorrect quiz answers into personalized learning interventions by identifying the root cause of a student\'s misconception. It features AI error diagnosis, personalized correction, adaptive remediation, misconception tracking, and a reliable AI pipeline with validation, sanitization, error recovery, and database caching.',
+    views: 1120,
+    stars: 310,
+    forks: 65,
+    categories: ['AI / ML', 'RAG'],
+    status: 'Completed',
+    tags: ['#AIErrorDiagnosis', '#AdaptiveRemediation', '#MisconceptionTracking', '#StructuredLLM', '#Next.js', '#TypeScript'],
+    imageUrl: analyticalOverviewImage,
+    githubUrl: 'https://github.com/eusha/diagnostic-analysis',
+    demoUrl: 'https://proffessorl-rafidai.vercel.app/',
+    overview: {
+      headline: 'Explain My Mistake — AI Diagnostic Learning System',
+      intro: [
+        'An AI-powered mistake analysis engine that transforms incorrect quiz answers into personalized learning interventions by identifying the root cause of a student\'s misconception.',
+        'Uses structured LLM outputs with validation, sanitization, error recovery, and database caching to reduce redundant AI calls and ensure consistent responses.'
+      ],
+      differentiatorsTitle: 'Core Platform Features & Capabilities',
+      differentiators: [
+        {
+          title: '🔍 AI Error Diagnosis',
+          description: 'Analyzes the question, correct answer, and student\'s response to identify conceptual misunderstandings, reasoning errors, or careless mistakes.',
+        },
+        {
+          title: '💡 Personalized Correction',
+          description: 'Generates targeted explanations, quick fixes, analogies, step-by-step corrections, and prevention strategies.',
+        },
+        {
+          title: '🔄 Adaptive Remediation',
+          description: 'Automatically creates follow-up practice questions to verify whether the misconception has been resolved.',
+        },
+        {
+          title: '📈 Misconception Tracking',
+          description: 'Tracks recurring errors and knowledge gaps over time to build a personalized learning profile.',
+        },
+        {
+          title: '⚡ Reliable AI Pipeline',
+          description: 'Uses structured LLM outputs with validation, sanitization, error recovery, and database caching to reduce redundant AI calls and ensure consistent responses.',
+        },
+      ],
+      reliabilityTitle: 'Core End-to-End Architecture Flow',
+      reliability: [
+        'Wrong Answer Submitted',
+        'AI Error Diagnosis & Root Cause Analysis',
+        'Personalized Explanation & Correction Generation',
+        'Targeted Practice Question Creation',
+        'Learning Verification & Misconception Tracking',
+      ],
+      oneLiner: 'Transforming incorrect quiz answers into personalized learning interventions by identifying the root cause of student misconceptions.',
+    },
+    architectureLoop: ['Wrong Answer', 'Error Diagnosis', 'Root Cause', 'Personalized Explanation', 'Targeted Practice', 'Learning Verification'],
+    architectureDiagram: `DIAGNOSTIC ANALYSIS LEARNING SYSTEM
+                         │
+                         ▼
+            ┌────────────────────────┐
+            │     WRONG ANSWER       │
+            │                        │
+            │ • Question Context     │
+            │ • Correct Answer       │
+            │ • Student Response     │
+            └────────────┬───────────┘
+                         │
+                         ▼
+            ┌────────────────────────┐
+            │     AI DIAGNOSIS       │
+            │                        │
+            │ • Error Analysis       │
+            │ • Conceptual Gap       │
+            │ • Root Cause ID        │
+            └────────────┬───────────┘
+                         │
+                         ▼
+            ┌────────────────────────┐
+            │ PERSONALIZED CORRECTION│
+            │                        │
+            │ • Target Explanation   │
+            │ • Quick Fix / Analogy  │
+            │ • Step-by-Step Fix     │
+            │ • Prevention Strategy  │
+            └────────────┬───────────┘
+                         │
+                         ▼
+            ┌────────────────────────┐
+            │  ADAPTIVE REMEDIATION  │
+            │                        │
+            │ • Follow-up Practice   │
+            │ • Verification Qs      │
+            └────────────┬───────────┘
+                         │
+                         ▼
+            ┌────────────────────────┐
+            │ MISCONCEPTION TRACKING │
+            │                        │
+            │ • Recurring Errors     │
+            │ • Knowledge Gaps       │
+            │ • Learning Profile     │
+            └────────────────────────┘`,
+    outputImages: [
+      { src: analyticalOverviewImage },
+      { src: analyticalShot01 },
+      { src: analyticalShot02 },
+    ],
+  },
+  {
+    id: 'behavioral-analytics-burnout',
+    title: 'Behavioral Analytics & Burnout Prevention',
+    description: 'An AI-powered student analytics platform that transforms behavioral telemetry and academic data into predictive insights, burnout-risk detection, and proactive AI coaching.',
+    fullDescription: 'Behavioral Analytics & Burnout Prevention is an advanced student intelligence platform designed to continuously track behavioral telemetry (study time, task completion, engagement patterns, interaction behavior) and process signals through a robust burnout and wellbeing engine. It combines engagement and academic data to identify performance trends, forecast potential academic issues, and deploy specialized AI agents for personalized coaching and proactive interventions.',
+    views: 950,
+    stars: 280,
+    forks: 54,
+    categories: ['Data & Behavioral Engine', 'AI / ML'],
+    status: 'Completed',
+    tags: ['#Telemetry', '#BurnoutDetection', '#PredictiveAnalytics', '#AICoaching', '#Next.js', '#TypeScript'],
+    imageUrl: behavioralOverviewImage,
+    githubUrl: 'https://github.com/eusha/behavioral-analytics-burnout',
+    demoUrl: 'https://proffessorl-rafidai.vercel.app/',
+    overview: {
+      headline: 'Behavioral Analytics, Burnout Risk Detection & Proactive AI Coaching',
+      intro: [
+        'An AI-powered student analytics platform that transforms behavioral telemetry and academic data into predictive insights, burnout-risk detection, and proactive AI coaching.',
+        'Maintains a unified Digital Student Model combining academic performance, study behavior, tasks, journals, and engagement history into an actionable closed-loop workflow.'
+      ],
+      differentiatorsTitle: 'Core Platform Modules & Capabilities',
+      differentiators: [
+        {
+          title: '📊 Behavioral Telemetry',
+          description: 'Tracks study time, screen/active time, task completion, interaction behavior, and study frequency in real time.',
+        },
+        {
+          title: '🔥 Burnout & Wellbeing Engine',
+          description: 'Processes behavioral signals to estimate fatigue detection, stress indicators, workload analysis, and dynamic burnout risk scores (Low → Moderate → High).',
+        },
+        {
+          title: '🔮 Predictive Analytics',
+          description: 'Combines engagement and academic history to identify performance trends, consistency metrics, behavior anomalies, and forecast potential academic issues.',
+        },
+        {
+          title: '🤖 Proactive AI Coaching Layer',
+          description: 'Turns analytics into smart notifications, break recommendations, workload adjustments, schedule optimization, and early warnings.',
+        },
+        {
+          title: '🔄 Closed Feedback Loop',
+          description: 'Student actions feed directly back into telemetry, continuously updating the Digital Student Model for adaptive intervention.',
+        },
+      ],
+      reliabilityTitle: 'Core End-to-End Architecture Flow',
+      reliability: [
+        'Student Activity → Behavioral Telemetry (Event Collection, Session Tracking, Timing Analysis)',
+        'Data Processing (Aggregation, Normalization, Trend Calculation, Historical Analysis)',
+        'Behavioral Analytics Engine (Engagement Score, Productivity Trends, Behavior Anomalies)',
+        'Burnout & Risk Classification (Fatigue Detection, Stress Indicators, Low → Moderate → High)',
+        'Intervention Engine & Proactive AI Coaching → Student Action → Feedback Loop',
+      ],
+      oneLiner: 'Transforming raw behavioral telemetry into predictive insights, early burnout detection, and proactive AI coaching through a continuous closed-loop feedback system.',
+    },
+    architectureLoop: ['Student Activity', 'Telemetry', 'Data Processing', 'Behavioral Analytics', 'Burnout Engine', 'Risk Classification', 'Intervention Engine', 'Student Action', 'Feedback Loop'],
+    architectureDiagram: `BEHAVIORAL ANALYTICS & BURNOUT PREVENTION SYSTEM
+                         │
+                         ▼
+            ┌────────────────────────┐
+            │   STUDENT ACTIVITIES   │
+            │                        │
+            │ • Study Sessions       │
+            │ • Screen/Active Time   │
+            │ • Task Completion      │
+            │ • Interaction Events   │
+            │ • Study Frequency      │
+            └────────────┬───────────┘
+                         │
+                         ▼
+            ┌────────────────────────┐
+            │   TELEMETRY ENGINE     │
+            │                        │
+            │ Event Collection       │
+            │ Session Tracking       │
+            │ Timing Analysis        │
+            │ Engagement Metrics     │
+            └────────────┬───────────┘
+                         │
+                         ▼
+            ┌────────────────────────┐
+            │   DATA PROCESSING      │
+            │                        │
+            │ • Aggregation          │
+            │ • Normalization        │
+            │ • Trend Calculation    │
+            │ • Historical Analysis  │
+            └────────────┬───────────┘
+                         │
+                         ▼
+            ┌────────────────────────┐
+            │ BEHAVIORAL ANALYTICS   │
+            │       ENGINE           │
+            │                        │
+            │ • Engagement Score     │
+            │ • Productivity Trends  │
+            │ • Consistency          │
+            │ • Behavior Anomalies   │
+            │ • Activity Patterns    │
+            └────────────┬───────────┘
+                         │
+                         ▼
+            ┌────────────────────────┐
+            │   BURNOUT ENGINE       │
+            │                        │
+            │ • Fatigue Detection    │
+            │ • Stress Indicators    │
+            │ • Workload Analysis    │
+            │ • Burnout Risk Score   │
+            │ • Wellbeing Trends     │
+            └────────────┬───────────┘
+                         │
+                         ▼
+            ┌────────────────────────┐
+            │   RISK CLASSIFICATION  │
+            │                        │
+            │   LOW → MODERATE →     │
+            │          HIGH          │
+            └────────────┬───────────┘
+                         │
+                         ▼
+            ┌────────────────────────┐
+            │  INTERVENTION ENGINE   │
+            │                        │
+            │ • Smart Notifications  │
+            │ • Break Recommendations│
+            │ • Workload Adjustment  │
+            │ • Schedule Optimization│
+            │ • Early Warnings       │
+            └────────────┬───────────┘
+                         │
+                         ▼
+                  ┌─────────────┐
+                  │   STUDENT   │
+                  │             │
+                  │ Takes Action│
+                  └──────┬──────┘
+                         │
+                         │ New Activity
+                         ▼
+                  ───────────────
+                  FEEDBACK LOOP
+                  ───────────────
+                         │
+                         └──────────────► TELEMETRY`,
+    outputImages: [
+      { src: behavioralOverviewImage },
+      { src: behavioralShot01 },
+      { src: behavioralShot02 },
+    ],
+  },
   {
     id: 'adaptive-learning-intelligent',
     title: 'Adaptive Learning Intelligent',

@@ -21,17 +21,32 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
   const { getViews, getStars, isStarred, addStar, ready: statsReady } = useProjectStats();
 
   const filteredProjects = useMemo(() => {
-    return projectsData.filter((project) => {
+    return [...projectsData]
+      .map((project) => {
+        const liveViews = getViews(project.id);
+        const liveStars = getStars(project.id);
+        return {
+          ...project,
+          sortViews: liveViews !== null ? liveViews : project.views,
+          sortStars: liveStars !== null ? liveStars : (project.stars || 0),
+        };
+      })
+      .sort((a, b) => {
+        const viewsDiff = b.sortViews - a.sortViews;
+        if (viewsDiff !== 0) return viewsDiff;
+        return b.sortStars - a.sortStars;
+      })
+      .filter((project) => {
         const matchesCategory = selectedCategory === 'All' || project.categories.some((cat) => cat === selectedCategory);
-      const matchesStatus = selectedStatus === 'All' || project.status === selectedStatus;
-      const matchesSearch =
-        project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        project.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        project.tags.some((tag) => tag.toLowerCase().includes(searchQuery.toLowerCase()));
+        const matchesStatus = selectedStatus === 'All' || project.status === selectedStatus;
+        const matchesSearch =
+          project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          project.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          project.tags.some((tag) => tag.toLowerCase().includes(searchQuery.toLowerCase()));
 
-      return matchesCategory && matchesStatus && matchesSearch;
-    });
-  }, [selectedCategory, selectedStatus, searchQuery]);
+        return matchesCategory && matchesStatus && matchesSearch;
+      });
+  }, [selectedCategory, selectedStatus, searchQuery, statsReady, getViews, getStars]);
 
   return (
     <div className="flex flex-col lg:flex-row h-full min-h-[calc(100vh-panel-header-panel-footer)] animate-fadeIn">
@@ -89,7 +104,7 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
 
           {isTechOpen && (
             <div className="flex flex-wrap gap-1.5 lg:flex-col lg:gap-1.5 lg:ml-3 animate-fadeIn">
-              {['All', 'AI / ML', 'RAG', 'Web Development', 'Dev Tools'].map((cat) => (
+              {['All', 'AI / ML', 'RAG', 'Web Development', 'Dev Tools', 'Data & Behavioral Engine'].map((cat) => (
                 <label
                   key={cat}
                   onClick={() => {

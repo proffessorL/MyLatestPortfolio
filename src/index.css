@@ -88,7 +88,23 @@ body {
   background: #57423b;
 }
 
-/* Heatmap styles */
+@keyframes dataStream {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.2; transform: scale(1); filter: drop-shadow(0 0 2px currentColor); }
+  50% { opacity: 0.9; transform: scale(1.3); filter: drop-shadow(0 0 8px currentColor); }
+}
+
+.animate-data-stream {
+  animation: dataStream 6s linear infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 4s ease-in-out infinite;
+}
 .heatmap-grid {
   display: grid;
   grid-template-rows: repeat(7, 1fr);

@@ -73,8 +73,27 @@ export const Home: React.FC<HomeProps> = ({ onNavigate, onSelectProject }) => {
   return (
     <div className="p-4 md:p-6 lg:p-8 max-w-7xl mx-auto space-y-8 animate-fadeIn">
       {/* Profile Header */}
-      <section className="flex flex-col md:flex-row items-center md:items-start gap-8 bg-surface-container-low border border-outline-variant/60 p-6 md:p-8 rounded-lg shadow-xs hover:border-primary/40 transition-colors">
-        <div className="relative w-32 h-32 md:w-40 md:h-40 shrink-0">
+      <section className="relative overflow-hidden flex flex-col md:flex-row items-center md:items-start gap-8 bg-surface-container-low border border-outline-variant/60 p-6 md:p-8 rounded-lg shadow-xs hover:border-primary/40 transition-colors">
+        {/* Unique Circuit / Git Branch Animated Background */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden select-none opacity-25 [mask-image:radial-gradient(ellipse_at_center,transparent_30%,black_90%)]">
+          <svg className="absolute w-full h-full text-primary" viewBox="0 0 800 300" fill="none" preserveAspectRatio="none">
+            <path d="M0 50 H200 L260 110 H500 L560 50 H800" stroke="currentColor" strokeWidth="2" strokeDasharray="6 6" className="animate-data-stream" />
+            <path d="M0 150 H120 L180 210 H600 L660 150 H800" stroke="currentColor" strokeWidth="1.5" strokeDasharray="4 4" className="animate-data-stream" style={{ animationDelay: '-2s' }} />
+            <path d="M0 250 H300 L360 190 H700 L760 250 H800" stroke="currentColor" strokeWidth="2" strokeDasharray="8 4" className="animate-data-stream" style={{ animationDelay: '-4s' }} />
+            
+            {/* Git Nodes */}
+            <circle cx="200" cy="50" r="4" fill="currentColor" className="animate-pulse-glow" />
+            <circle cx="260" cy="110" r="5" fill="currentColor" className="animate-pulse-glow" style={{ animationDelay: '1s' }} />
+            <circle cx="500" cy="110" r="4" fill="currentColor" className="animate-pulse-glow" style={{ animationDelay: '2s' }} />
+            <circle cx="560" cy="50" r="4" fill="currentColor" className="animate-pulse-glow" style={{ animationDelay: '0.5s' }} />
+            <circle cx="120" cy="150" r="4" fill="currentColor" className="animate-pulse-glow" style={{ animationDelay: '1.5s' }} />
+            <circle cx="180" cy="210" r="5" fill="currentColor" className="animate-pulse-glow" style={{ animationDelay: '3s' }} />
+            <circle cx="600" cy="210" r="4" fill="currentColor" className="animate-pulse-glow" style={{ animationDelay: '2.5s' }} />
+            <circle cx="660" cy="150" r="4" fill="currentColor" className="animate-pulse-glow" style={{ animationDelay: '1.2s' }} />
+          </svg>
+        </div>
+
+        <div className="relative w-32 h-32 md:w-40 md:h-40 shrink-0 z-10">
           <div
             className="absolute inset-0 rounded-full bg-primary/50 blur-xl profile-glow"
             aria-hidden="true"
@@ -89,7 +108,7 @@ export const Home: React.FC<HomeProps> = ({ onNavigate, onSelectProject }) => {
           <div className="absolute bottom-1 right-1 w-5 h-5 rounded-full bg-secondary border-2 border-background shadow-[0_0_10px_rgba(103,223,112,0.8)]" title="Available for hire"></div>
         </div>
 
-        <div className="flex-1 flex flex-col justify-center items-center md:items-start text-center md:text-left">
+        <div className="flex-1 flex flex-col justify-center items-center md:items-start text-center md:text-left z-10">
           <div className="flex items-center gap-3 mb-1 flex-wrap justify-center md:justify-start">
             <h1 className="font-headline-xl text-headline-xl text-on-surface font-bold">Eusha</h1>
             <span className="font-mono-code text-xs px-2.5 py-0.5 rounded bg-primary/10 border border-primary/30 text-primary">v2.4.0-release</span>

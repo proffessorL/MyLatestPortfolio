@@ -32,7 +32,7 @@ export interface ProjectOverview {
   oneLiner?: string;
 }
 
-export type ProjectCategory = 'AI / ML' | 'Web Development' | 'Dev Tools' | 'RAG';
+export type ProjectCategory = 'AI / ML' | 'Web Development' | 'Dev Tools' | 'RAG' | 'Data & Behavioral Engine';
 
 export interface ProjectOutputImage {
   src: string;
