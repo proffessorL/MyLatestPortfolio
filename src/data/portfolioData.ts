@@ -1,5 +1,14 @@
 import type { ProjectItem, ExperienceItem, SkillCategory } from '../types';
 import resnorImage from '../assets/resnor.png';
+import adaptiveOverviewImage from '../../photos/adaptiveLearning/adaptiveOvrview.png';
+import adaptiveShot01 from '../../photos/adaptiveLearning/Screenshot 2026-08-24 150723.png';
+import adaptiveShot02 from '../../photos/adaptiveLearning/Screenshot 2026-08-24 150741.png';
+import adaptiveShot03 from '../../photos/adaptiveLearning/Screenshot 2026-08-24 150853.png';
+import adaptiveShot04 from '../../photos/adaptiveLearning/Screenshot 2026-08-24 150953.png';
+import adaptiveShot05 from '../../photos/adaptiveLearning/Screenshot 2026-08-24 151008.png';
+import adaptiveShot06 from '../../photos/adaptiveLearning/Screenshot 2026-08-24 151018.png';
+import adaptiveShot07 from '../../photos/adaptiveLearning/Screenshot 2026-08-24 151157.png';
+import adaptiveShot08 from '../../photos/adaptiveLearning/Screenshot 2026-08-24 151205.png';
 import resnorShot01 from '../assets/resnor-shot-01.png';
 import resnorShot02 from '../assets/resnor-shot-02.png';
 import resnorShot03 from '../assets/resnor-shot-03.png';
@@ -13,6 +22,116 @@ import resnorShot10 from '../assets/resnor-shot-10.png';
 import resnorShot11 from '../assets/resnor-shot-11.png';
 
 export const projectsData: ProjectItem[] = [
+  {
+    id: 'adaptive-learning-intelligent',
+    title: 'Adaptive Learning Intelligent',
+    description: 'An advanced RAG-powered adaptive learning intelligence platform that dynamically customizes curriculum delivery and real-time concept reinforcement.',
+    fullDescription: 'Adaptive Learning Intelligent is a state-of-the-art educational platform leveraging Retrieval-Augmented Generation (RAG) and multi-agent AI to assess student comprehension levels in real time, dynamically generating tailored study pathways and contextual knowledge bases.',
+    views: 840,
+    stars: 215,
+    forks: 42,
+    categories: ['RAG', 'AI / ML'],
+    status: 'Completed',
+    tags: ['#RAG', '#LangChain', '#VectorDB', '#Next.js', '#TypeScript', '#AI'],
+    imageUrl: adaptiveOverviewImage,
+    githubUrl: 'https://github.com/eusha/adaptive-learning-intelligent',
+    demoUrl: 'https://proffessorl-rafidai.vercel.app/',
+    overview: {
+      headline: 'RAG-Powered Personalized Learning & Intelligent Tutoring',
+      intro: [
+        'An advanced agentic AI tutoring system that generates personalized responses by combining LLMs with a course-aware RAG pipeline.',
+        'Designed to adapt directly to study plans, weak topics, quiz mistakes, notes, and individual learning behavior for hyper-targeted student growth.',
+      ],
+      differentiatorsTitle: 'Key Architectural & RAG Features',
+      differentiators: [
+        {
+          title: '📚 RAG Pipeline & Vector Database',
+          description: 'Course materials undergo semantic chunking and 384D embeddings stored in PostgreSQL + pgvector, enabling ultra-fast cosine-similarity retrieval.',
+        },
+        {
+          title: '🎯 Grounded AI Responses',
+          description: 'Retrieves the most relevant course content from the vector database and injects it into the LLM context before generating precise answers.',
+        },
+        {
+          title: '🧩 Personalized Tutoring Engine',
+          description: 'Leverages study plans, weak topics, quiz mistakes, notes, and continuous learning behavior to adapt explanations and guidance.',
+        },
+        {
+          title: '🤖 Multi-Model Ensemble (7 Specialized LLMs)',
+          description: 'Integrates 7 distinct AI models working collaboratively, featuring a multi-tiered architecture where each primary tutor delegates across 3 specialized sub-models to synthesize the most accurate, reliable, and nuanced response.',
+        },
+        {
+          title: '⚡ Hybrid AI Architecture',
+          description: 'Supports Groq, Ollama, OpenRouter & HuggingFace with robust fallback mechanisms for highly resilient operation.',
+        },
+      ],
+      reliabilityTitle: 'Core End-to-End Flow',
+      reliability: [
+        'Course Content → RAG Database (PostgreSQL + pgvector)',
+        'Semantic Retrieval & Cosine Similarity',
+        'Context Injection & Grounded Synthesis',
+        'Multi-Agent LLM Processing (Groq, Ollama, OpenRouter, HuggingFace)',
+        'Personalized Tutor Response & Continuous Adaptation',
+      ],
+      oneLiner: 'Bringing true adaptive intelligence to education through course-aware RAG pipelines, multi-agent personas, and hybrid resilient LLM architecture.',
+    },
+    architectureLoop: ['Course Content', 'RAG Database', 'Semantic Retrieval', 'Context Injection', 'LLM Synthesis', 'Personalized Response'],
+    architectureDiagram: `╔════════════════════════════════════════════╗
+║             📚 COURSE MATERIAL             ║
+╚═════════════════════╦══════════════════════╝
+                      ║
+                      ▼
+            ┌───────────────────┐
+            │   ✂️  CHUNKING    │
+            └─────────┬─────────┘
+                      ║
+                      ▼
+            ┌───────────────────┐
+            │   🧬  EMBEDDING   │
+            └─────────┬─────────┘
+                      ║
+                      ▼
+      ╔═══════════════════════════════╗
+      │  PostgreSQL ＋ pgvector       │
+      │  ⚡ [ VECTOR DATABASE ]       │
+      ╚═══════════════╦═══════════════╝
+                      ║
+                      ║ 🔍 Semantic Search & Top-K
+                      ▼
+      ╔═══════════════════════════════╗
+      │      🎯 RELEVANT CONTEXT      │
+      ╚═══════════════╦═══════════════╝
+                      ║
+                      ╠════════════════► 👤 Student Context
+                      ║                  📋 Study Plan
+                      ║                  ⚠️ Weak Topics
+                      ║                  ❌ Quiz Mistakes
+                      ▼
+      ╔═══════════════════════════════╗
+      │      ⚡ CONTEXT ASSEMBLY      │
+      ╚═══════════════╦═══════════════╝
+                      ║
+                      ▼
+      ╔═══════════════════════════════╗
+      │          🤖 LLM ENGINE        │
+      │  Groq / OpenRouter / Ollama   │
+      ╚═══════════════╦═══════════════╝
+                      ║
+                      ▼
+╔════════════════════════════════════════════╗
+│    ✨ GROUNDED PERSONALIZED AI RESPONSE    │
+╚════════════════════════════════════════════╝`,
+    outputImages: [
+      { src: adaptiveShot01 },
+      { src: adaptiveShot02 },
+      { src: adaptiveShot03 },
+      { src: adaptiveShot04 },
+      { src: adaptiveShot05 },
+      { src: adaptiveShot06 },
+      { src: adaptiveShot07 },
+      { src: adaptiveShot08 },
+    ],
+  },
   {
     id: 'resnor',
     title: 'RESNOR',
@@ -213,6 +332,17 @@ export const skillsCategories: SkillCategory[] = [
       { name: 'Docker & Containers', percentage: 62, icon: 'view_in_ar' },
       { name: 'AWS & Cloud Deployment', percentage: 55, icon: 'cloud' },
       { name: 'VS Code Architecture', percentage: 90, icon: 'code' },
+    ],
+  },
+  {
+    title: 'RAG & Vector AI',
+    icon: 'hub',
+    skills: [
+      { name: 'RAG Pipelines & Chunking', percentage: 94, icon: 'layers' },
+      { name: 'pgvector & Vector DB', percentage: 92, icon: 'database' },
+      { name: 'Embeddings & Similarity Search', percentage: 91, icon: 'search' },
+      { name: 'Multi-Agent AI Systems', percentage: 90, icon: 'groups' },
+      { name: 'Hybrid LLM Routing (Groq/Ollama)', percentage: 93, icon: 'bolt' },
     ],
   },
   {

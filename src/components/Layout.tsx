@@ -30,7 +30,13 @@ const ACCENTS: { id: AccentTheme; label: string; primary: string; container: str
 
 export const Layout: React.FC = () => {
   const [activeTabId, setActiveTabId] = useState<TabId>('home');
-  const [openTabIds, setOpenTabIds] = useState<TabId[]>(['home', 'projects', 'skills']);
+  const [openTabIds, setOpenTabIds] = useState<TabId[]>(() => {
+    // If on mobile (width < 768px), start with only the active tab or home tab to avoid adding extra tabs under the navbar
+    if (typeof window !== 'undefined' && window.innerWidth < 768) {
+      return ['home'];
+    }
+    return ['home', 'projects', 'skills'];
+  });
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isOptionsMenuOpen, setIsOptionsMenuOpen] = useState(false);
@@ -55,7 +61,12 @@ export const Layout: React.FC = () => {
     soundManager.playClick('tab');
     setActiveTabId(id);
     if (!openTabIds.includes(id)) {
-      setOpenTabIds((prev) => [...prev, id]);
+      // On mobile view (< 768px), keep only the currently selected tab to prevent multiple tabs/tab bar clutter
+      if (typeof window !== 'undefined' && window.innerWidth < 768) {
+        setOpenTabIds([id]);
+      } else {
+        setOpenTabIds((prev) => [...prev, id]);
+      }
     }
     setIsMobileMenuOpen(false);
     setIsOptionsMenuOpen(false);

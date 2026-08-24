@@ -12,6 +12,12 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [selectedStatus, setSelectedStatus] = useState<string>('All');
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const [isTechOpen, setIsTechOpen] = useState<boolean>(() => {
+    return typeof window !== 'undefined' && window.innerWidth >= 768;
+  });
+  const [isStatusOpen, setIsStatusOpen] = useState<boolean>(() => {
+    return typeof window !== 'undefined' && window.innerWidth >= 768;
+  });
   const { getViews, getStars, isStarred, addStar, ready: statsReady } = useProjectStats();
 
   const filteredProjects = useMemo(() => {
@@ -68,77 +74,97 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
 
         {/* Categories Section */}
         <div>
-          <div className="flex items-center text-on-surface-variant font-mono-code text-xs mb-2 cursor-pointer hover:text-on-surface">
-            <span className="material-symbols-outlined text-sm mr-1">keyboard_arrow_down</span>
+          <div
+            onClick={() => {
+              soundManager.playClick('action');
+              setIsTechOpen(!isTechOpen);
+            }}
+            className="flex items-center text-on-surface-variant font-mono-code text-xs mb-2 cursor-pointer hover:text-on-surface select-none"
+          >
+            <span className="material-symbols-outlined text-sm mr-1 transition-transform duration-200">
+              {isTechOpen ? 'keyboard_arrow_down' : 'keyboard_arrow_right'}
+            </span>
             <span className="uppercase font-bold tracking-wider">Technologies</span>
           </div>
 
-          <div className="flex flex-wrap gap-1.5 lg:flex-col lg:gap-1.5 lg:ml-3">
-            {['All', 'AI / ML', 'Web Development', 'Dev Tools'].map((cat) => (
-              <label
-                key={cat}
-                onClick={() => {
-                  soundManager.playClick('tab');
-                  setSelectedCategory(cat);
-                }}
-                className={`inline-flex items-center gap-1.5 lg:gap-2 cursor-pointer px-2.5 py-1.5 lg:px-1 lg:py-1 rounded-md text-xs transition-colors border ${
-                  selectedCategory === cat
-                    ? 'bg-surface-container text-primary font-bold border-primary/40'
-                    : 'text-on-surface-variant hover:text-on-surface border-transparent hover:border-outline-variant/40'
-                }`}
-              >
-                <input
-                  type="radio"
-                  name="category"
-                  checked={selectedCategory === cat}
-                  onChange={() => setSelectedCategory(cat)}
-                  className="accent-primary h-3 w-3"
-                />
-                <span className="font-mono-code">{cat}</span>
-              </label>
-            ))}
-          </div>
+          {isTechOpen && (
+            <div className="flex flex-wrap gap-1.5 lg:flex-col lg:gap-1.5 lg:ml-3 animate-fadeIn">
+              {['All', 'AI / ML', 'RAG', 'Web Development', 'Dev Tools'].map((cat) => (
+                <label
+                  key={cat}
+                  onClick={() => {
+                    soundManager.playClick('tab');
+                    setSelectedCategory(cat);
+                  }}
+                  className={`inline-flex items-center gap-1.5 lg:gap-2 cursor-pointer px-2.5 py-1.5 lg:px-1 lg:py-1 rounded-md text-xs transition-colors border ${
+                    selectedCategory === cat
+                      ? 'bg-surface-container text-primary font-bold border-primary/40'
+                      : 'text-on-surface-variant hover:text-on-surface border-transparent hover:border-outline-variant/40'
+                  }`}
+                >
+                  <input
+                    type="radio"
+                    name="category"
+                    checked={selectedCategory === cat}
+                    onChange={() => setSelectedCategory(cat)}
+                    className="accent-primary h-3 w-3"
+                  />
+                  <span className="font-mono-code">{cat}</span>
+                </label>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Status Section */}
         <div>
-          <div className="flex items-center text-on-surface-variant font-mono-code text-xs mb-2 cursor-pointer hover:text-on-surface">
-            <span className="material-symbols-outlined text-sm mr-1">keyboard_arrow_down</span>
+          <div
+            onClick={() => {
+              soundManager.playClick('action');
+              setIsStatusOpen(!isStatusOpen);
+            }}
+            className="flex items-center text-on-surface-variant font-mono-code text-xs mb-2 cursor-pointer hover:text-on-surface select-none"
+          >
+            <span className="material-symbols-outlined text-sm mr-1 transition-transform duration-200">
+              {isStatusOpen ? 'keyboard_arrow_down' : 'keyboard_arrow_right'}
+            </span>
             <span className="uppercase font-bold tracking-wider">Status</span>
           </div>
 
-          <div className="flex flex-wrap gap-1.5 lg:flex-col lg:gap-1.5 lg:ml-3">
-            {[
-              { label: 'All', color: '' },
-              { label: 'Completed', color: 'bg-secondary' },
-              { label: 'In Progress', color: 'bg-tertiary' },
-            ].map((stat) => (
-              <label
-                key={stat.label}
-                onClick={() => {
-                  soundManager.playClick('tab');
-                  setSelectedStatus(stat.label);
-                }}
-                className={`inline-flex items-center gap-1.5 lg:gap-2 cursor-pointer px-2.5 py-1.5 lg:px-1 lg:py-1 rounded-md text-xs transition-colors border ${
-                  selectedStatus === stat.label
-                    ? 'bg-surface-container text-primary font-bold border-primary/40'
-                    : 'text-on-surface-variant hover:text-on-surface border-transparent hover:border-outline-variant/40'
-                }`}
-              >
-                <input
-                  type="radio"
-                  name="status"
-                  checked={selectedStatus === stat.label}
-                  onChange={() => setSelectedStatus(stat.label)}
-                  className="accent-primary h-3 w-3"
-                />
-                <span className="font-mono-code flex items-center gap-1.5">
-                  {stat.color && <span className={`w-2 h-2 rounded-full ${stat.color}`}></span>}
-                  {stat.label}
-                </span>
-              </label>
-            ))}
-          </div>
+          {isStatusOpen && (
+            <div className="flex flex-wrap gap-1.5 lg:flex-col lg:gap-1.5 lg:ml-3 animate-fadeIn">
+              {[
+                { label: 'All', color: '' },
+                { label: 'Completed', color: 'bg-secondary' },
+                { label: 'In Progress', color: 'bg-tertiary' },
+              ].map((stat) => (
+                <label
+                  key={stat.label}
+                  onClick={() => {
+                    soundManager.playClick('tab');
+                    setSelectedStatus(stat.label);
+                  }}
+                  className={`inline-flex items-center gap-1.5 lg:gap-2 cursor-pointer px-2.5 py-1.5 lg:px-1 lg:py-1 rounded-md text-xs transition-colors border ${
+                    selectedStatus === stat.label
+                      ? 'bg-surface-container text-primary font-bold border-primary/40'
+                      : 'text-on-surface-variant hover:text-on-surface border-transparent hover:border-outline-variant/40'
+                  }`}
+                >
+                  <input
+                    type="radio"
+                    name="status"
+                    checked={selectedStatus === stat.label}
+                    onChange={() => setSelectedStatus(stat.label)}
+                    className="accent-primary h-3 w-3"
+                  />
+                  <span className="font-mono-code flex items-center gap-1.5">
+                    {stat.color && <span className={`w-2 h-2 rounded-full ${stat.color}`}></span>}
+                    {stat.label}
+                  </span>
+                </label>
+              ))}
+            </div>
+          )}
         </div>
       </aside>
 
